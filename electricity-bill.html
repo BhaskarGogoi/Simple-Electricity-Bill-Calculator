@@ -1,0 +1,137 @@
+<!-- Electricity Bill Calculator
+By: Bhaskarjyoti Gogoi
+Date: 30-12-2021 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Electricity Bill Calculator</title>
+    <style>
+        *{
+            font-family: Calibri;
+        }
+        body{
+            background-color: #330033;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 800 800'%3E%3Cg fill='none' stroke='%23404' stroke-width='1'%3E%3Cpath d='M769 229L1037 260.9M927 880L731 737 520 660 309 538 40 599 295 764 126.5 879.5 40 599-197 493 102 382-31 229 126.5 79.5-69-63'/%3E%3Cpath d='M-31 229L237 261 390 382 603 493 308.5 537.5 101.5 381.5M370 905L295 764'/%3E%3Cpath d='M520 660L578 842 731 737 840 599 603 493 520 660 295 764 309 538 390 382 539 269 769 229 577.5 41.5 370 105 295 -36 126.5 79.5 237 261 102 382 40 599 -69 737 127 880'/%3E%3Cpath d='M520-140L578.5 42.5 731-63M603 493L539 269 237 261 370 105M902 382L539 269M390 382L102 382'/%3E%3Cpath d='M-222 42L126.5 79.5 370 105 539 269 577.5 41.5 927 80 769 229 902 382 603 493 731 737M295-36L577.5 41.5M578 842L295 764M40-201L127 80M102 382L-261 269'/%3E%3C/g%3E%3Cg fill='%23505'%3E%3Ccircle cx='769' cy='229' r='5'/%3E%3Ccircle cx='539' cy='269' r='5'/%3E%3Ccircle cx='603' cy='493' r='5'/%3E%3Ccircle cx='731' cy='737' r='5'/%3E%3Ccircle cx='520' cy='660' r='5'/%3E%3Ccircle cx='309' cy='538' r='5'/%3E%3Ccircle cx='295' cy='764' r='5'/%3E%3Ccircle cx='40' cy='599' r='5'/%3E%3Ccircle cx='102' cy='382' r='5'/%3E%3Ccircle cx='127' cy='80' r='5'/%3E%3Ccircle cx='370' cy='105' r='5'/%3E%3Ccircle cx='578' cy='42' r='5'/%3E%3Ccircle cx='237' cy='261' r='5'/%3E%3Ccircle cx='390' cy='382' r='5'/%3E%3C/g%3E%3C/svg%3E");
+        }
+        .input-box{
+            width: 300px;
+            border: 8px solid #555;
+            margin: auto;
+            margin-top: 60px;
+            background-color: #fff;
+            text-align: center;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        .input-box input{
+            padding: 5px;
+            font-size: 16px;
+            border-radius: 8px;
+        }
+        .input-box button{
+            border: none;
+            background-color: #330033;
+            height: 32px;
+            padding: 5px;
+            color: #fff;
+            border-radius: 8px;
+            width: 70px;
+            transition: 0.5s;
+        }
+        .input-box button:hover{
+            background-color: #660b66;
+            cursor: pointer;
+        }
+        h1{
+            color: #fff;
+        }
+        .bill-structure{
+            display: none;
+            width: 300px;
+            border: 8px solid #555;
+            margin: auto;
+            margin-top: 60px;
+            background-color: #fff;
+            text-align: center;
+            padding: 10px;
+            border-radius: 15px;
+        }
+        .bill-structure  th, td{
+            border: 1px solid #888;
+            padding: 10px;
+        }
+       
+    </style>
+</head>
+<body>
+    <center><h1>Electricity Bill Calculator</h1></center>
+    <div class="input-box">
+        <input type="text" id="unit" placeholder="Enter Unit">
+        <button onclick="calculate()">Submit</button>
+    </div>
+    <div class="bill-structure" id="bill-structure">
+        <h2>Bill Structure</h2>
+        <center>
+            <table>
+                <tr>
+                    <th>Units</th>
+                    <th>Rate</th>
+                    <th>Amount</th>
+                </tr>
+                <tr id="slab1"></tr>
+                <tr id="slab2"></tr>
+                <tr id="slab3"></tr>
+            </table>
+        </center>
+        <h3 id="total"></h3>
+    </div>
+    <script>
+        function calculate(){
+            var x = document.getElementById("bill-structure");
+            var totalAmount, slab_1_Price, slab_2_Price, slab_3_Price;
+            var unit = document.getElementById("unit").value;
+            unit = parseFloat(unit);
+        
+            if(unit){
+                if(unit>240){
+                    slab_1_Price = 120 * 4.9;
+                    slab_2_Price = 120 * 6.15;
+                    slab_3_Price = (unit - 120 - 120) * 7.15;
+                    totalAmount = slab_1_Price + slab_2_Price + slab_3_Price;
+                    
+                    document.getElementById("slab1").innerHTML = "<td>120</td>  <td>4.9</td> <td>" + slab_1_Price.toFixed(2) + "</td>";
+                    document.getElementById("slab2").innerHTML = "<td>120</td>  <td>6.15</td> <td>" + slab_2_Price.toFixed(2) + "</td>";
+                    document.getElementById("slab3").innerHTML = "<td>" + (unit - 120 - 120) + "</td>  <td>7.15</td> <td>" + slab_3_Price.toFixed(2) + "</td>";
+                    document.getElementById("total").innerHTML = "Total Amount: " + totalAmount.toFixed(2);
+                    document.getElementById("slab2").style.display = "";
+                    document.getElementById("slab3").style.display = "";
+                    x.style.display = "block";
+
+                } else if(unit<=240 && unit>=120){
+                    slab_1_Price = 120 * 4.9;
+                    slab_2_Price = (unit - 120) * 6.15;
+                    totalAmount = slab_1_Price + slab_2_Price;
+                    document.getElementById("slab1").innerHTML = "<td>120</td>  <td>4.9</td> <td>" + slab_1_Price.toFixed(2) + "</td>";
+                    document.getElementById("slab2").innerHTML = "<td>" + (unit - 120) + "</td>  <td>6.15</td> <td>" + slab_2_Price.toFixed(2) + "</td>";
+                    document.getElementById("total").innerHTML = "Total Amount: " + totalAmount.toFixed(2);
+                    document.getElementById("slab2").style.display = "";
+                    document.getElementById("slab3").style.display = "none";
+                    x.style.display = "block";
+                    
+                } else {
+                    slab_1_Price = unit * 4.9;
+                    document.getElementById("slab1").innerHTML = "<td>" + unit + "</td>  <td>4.9</td> <td>" + slab_1_Price.toFixed(2) + "</td>";
+                    document.getElementById("total").innerHTML = "Total Amount: " + slab_1_Price.toFixed(2);
+                    document.getElementById("slab2").style.display = "none";
+                    document.getElementById("slab3").style.display = "none";
+                    x.style.display = "block";
+                }
+            } else {
+                alert("Enter Unit");
+            }
+            
+        }
+    </script>
+</body>
+</html>
